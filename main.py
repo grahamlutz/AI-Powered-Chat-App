@@ -9,7 +9,7 @@ load_dotenv()
 chat = ChatOpenAI()
 
 memory = ConversationBufferMemory(
-  memory_key = "message",
+  memory_key = "messages",
   return_messages = True
 )
 
@@ -23,7 +23,8 @@ prompt = ChatPromptTemplate(
 
 chain = LLMChain(
   llm = chat,
-  prompt = prompt
+  prompt = prompt,
+  memory = memory
 )
 
 while True:
