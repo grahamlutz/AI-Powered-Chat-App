@@ -10,7 +10,7 @@ pipenv install
 pipenv shell
 
 # Initialize the database
-flask --app app.web init-db
+pipenv run flask --app app.web init-db
 
 ```
 
