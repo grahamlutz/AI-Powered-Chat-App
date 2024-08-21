@@ -132,4 +132,3 @@ dmypy.json
 cython_debug/
 
 # App specific
-messages.json
