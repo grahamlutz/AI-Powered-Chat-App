@@ -134,3 +134,4 @@ cython_debug/
 
 # App specific
 instance/sqlite.db
+dump.rdb
