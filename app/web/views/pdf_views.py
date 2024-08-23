@@ -25,7 +25,7 @@ def upload_file(file_id, file_path, file_name):
         return res, status_code
 
     pdf = Pdf.create(id=file_id, name=file_name, user_id=g.user.id)
-
+    print('upload_file before process_document')
     process_document.delay(pdf.id)
 
     return pdf.as_dict()
