@@ -1,4 +1,4 @@
-from flask import Blueprint, g, request, Response, jsonify, stream_with_context
+from flask import Blueprint, g, request, Response, jsonify, stream_with_context, Flask
 from app.web.hooks import login_required, load_model
 from app.web.db.models import Pdf, Conversation
 from app.chat import build_chat, ChatArgs
@@ -42,6 +42,7 @@ def create_message(conversation):
         },
     )
 
+    print('chat_args: ', chat_args)
     chat = build_chat(chat_args)
 
     if not chat:
