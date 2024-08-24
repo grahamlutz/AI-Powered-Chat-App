@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from langchain.memory import ConversationButterMemory
+from langchain.memory import ConversationBufferMemory
 from langchain.schema import BaseChatMessageHistory
 
 from app.web.api import (
@@ -23,3 +23,11 @@ class SqlMessageHistory(BaseChatMessageHistory, BaseModel):
   
   def clear(self):
     pass
+
+def build_memory(chat_args):
+  return ConversationBufferMemory(
+    chat_memory=SqlMessageHistory(converation_id=chat_args.conversation_id),
+    return_message=True,
+    memory_key="chat_history",
+    output_key="answer"
+  )
