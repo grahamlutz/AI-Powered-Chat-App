@@ -1,4 +1,41 @@
+import random
 from app.chat.redis import client
+
+def random_component_by_score(component_type, component_map):
+    # Make sure component_type is "llm", "retriever", or "memory"
+    if component_type not in ["llm", "retriever", "memory"]:
+        raise ValueError('Invalid component_type')
+
+    # from redis, get hash containing sum total score for given component_type
+    values = client.hgetall(f"{component_type}_score_values")
+
+    # from redis, get the hash for number of times component_type has been voted on
+    counts = client.hgetall(f"{component_type}_score_counts")
+
+    # Get all valid componennt names from component_map
+    names = component_map.keys()
+
+    # loop over valid names and use them to calc avg score for each
+    # add avg score to dictionary
+    average_scores = {}
+    for name in names:
+        score = int(values.get(name, 1))
+        count = int(counts.get(name, 1))
+        avg = score / count
+        # to make sure an initial downvote doesn't keep
+        # this component from ever being chosen again
+        average_scores[name] = max(avg, 0.1)
+
+    # DO a weighted random selection
+    sum_scores = sum(average_scores.values())
+    random_val = random.uniform(0, sum_scores)
+    cumulative = 0
+
+    for name, score in average_scores.items():
+        cumulative += score
+        if random_val <= cumulative:
+            return name
+
 
 def score_conversation(
     conversation_id: str, score: float, llm: str, retriever: str, memory: str
