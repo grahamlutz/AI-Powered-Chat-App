@@ -2,7 +2,7 @@
 
 A sophisticated chat application that leverages the power of LangChain and ChatGPT to create a highly interactive and intelligent conversational experience. The app goes far beyond simple text generation, incorporating advanced features and production-ready techniques.
 
-## Key features of my chat app include:
+## Key features of the chat app include:
 
 1. **Complex text generation pipelines** that can incorporate external information, allowing the chatbot to access and utilize a wide range of data sources.
 
